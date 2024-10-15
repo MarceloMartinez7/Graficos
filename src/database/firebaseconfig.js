@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBp1Q2xeUmd3I1TGk7Qy70D74f_VbGCbHE",
-    authDomain: "graficos-a79c1.firebaseapp.com",
-    projectId: "graficos-a79c1",
-    storageBucket: "graficos-a79c1.appspot.com",
-    messagingSenderId: "623850192734",
-    appId: "1:623850192734:web:3ce3f83ea2c489037919cf",
-    measurementId: "G-FXD60PNWN7"
+  apiKey: "AIzaSyBdRnDhOW8Bkfjg6dmPBhWk2ovRxOoAK0s",
+  authDomain: "proyecto-estadisticas-763cd.firebaseapp.com",
+  projectId: "proyecto-estadisticas-763cd",
+  storageBucket: "proyecto-estadisticas-763cd.appspot.com",
+  messagingSenderId: "427368046259",
+  appId: "1:427368046259:web:fad847f86231cfaf7f9ac6",
+  measurementId: "G-DMNSQTXQ3K"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -16,3 +16,5 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export default db;
+
+

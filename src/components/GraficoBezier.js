@@ -1,18 +1,17 @@
 
 import { StyleSheet, View, Dimensions } from 'react-native';
-import {BarChart} from "react-native-chart-kit";
+import {LineChart} from "react-native-chart-kit";
 
-export default function GraficoSalarios({dataSalarios}) {
+export default function GraficoBezier({dataSalarios}) {
 
   let screenWidth = Dimensions.get("window").width
 
   return (
     <View style={styles.container}>
-      <BarChart
+      <LineChart
         data={dataSalarios}
         width={screenWidth-(screenWidth*0.1)}
         height={300}
-        yAxisLabel="C$"
         chartConfig={{
           backgroundGradientFrom: "#00FFFF",
           backgroundGradientFromOpacity: 0.1,
@@ -25,9 +24,7 @@ export default function GraficoSalarios({dataSalarios}) {
         style={{
           borderRadius: 10
         }}
-        verticalLabelRotation={45}
-        withHorizontalLabels={true}
-        showValuesOnTopOfBars={true}
+        bezier={true}
       />
     </View>
 
@@ -40,4 +37,3 @@ const styles = StyleSheet.create({
     margin: 10
   },
 });
-
