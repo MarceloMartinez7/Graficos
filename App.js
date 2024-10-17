@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import GraficoSalarios from './src/components/GraficoSalarios';
 import GraficoGeneros from './src/components/GraficoGeneros';
-import Formulario from './src/components/Formulario';
 import GraficoReporteEnfermedades from './src/components/GraficoReporteEnfermedades';
 import GraficoBezier from './src/components/GraficoBezier';
 import { collection, getDocs, query } from 'firebase/firestore';
-
+import GraficoProgreso from './src/components/GraficoProgreso';
 
 import db from './src/database/firebaseconfig';
 
 export default function Graficos() {
-
   const [bandera, setBandera] = useState(false); // Variable bandera
   const [dataSalarios, setDataSalarios] = useState({
     labels: [''],
     datasets: [{ data: [0] }]
   });
   const [dataGeneros, setDataGeneros] = useState([]); // Para almacenar datos de géneros
+  const [dataProgreso, setDataProgreso] = useState({
+    labels: ['Hombres', 'Mujeres'],
+    data: [0, 0]
+  });
 
   const dataReporteEnfermedades = [
     { date: "2017-01-05", count: 8 }, 
@@ -58,11 +60,10 @@ export default function Graficos() {
         querySnapshot.forEach((doc) => {
           const datosBD = doc.data();
           const { nombre, salario } = datosBD;
-            nombres.push(nombre); // Agrega nombre a la lista
-            salarios.push(salario); // Agrega edad a la lista
+          nombres.push(nombre);
+          salarios.push(salario);
         });
 
-        // Actualiza el estado con el formato requerido
         setDataSalarios({
           labels: nombres,
           datasets: [{ data: salarios }]
@@ -91,13 +92,12 @@ export default function Graficos() {
           const { genero } = datosBD;
 
           if (genero === "Masculino") {
-            masculino += 1; // Suma para Masculino
+            masculino += 1;
           } else if (genero === "Femenino") {
-            femenino += 1; // Suma para Femenino
+            femenino += 1;
           }
         });
 
-        // Formatear datos para el gráfico de pastel
         const totalData = [
           {
             name: "Masculino",
@@ -117,6 +117,16 @@ export default function Graficos() {
 
         setDataGeneros(totalData);
         console.log(totalData);
+        
+        // Actualiza los datos de progreso
+        const totalPersonas = masculino + femenino;
+        const progresos = totalPersonas > 0 ? [masculino / totalPersonas, femenino / totalPersonas] : [0, 0];
+        
+        setDataProgreso({
+          labels: ['Hombres', 'Mujeres'],
+          data: progresos
+        });
+        
       } catch (error) {
         console.error("Error al obtener documentos: ", error);
       }
@@ -126,17 +136,19 @@ export default function Graficos() {
   }, [bandera]);
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         {/* <Formulario setBandera={setBandera}/> */}
-        <GraficoSalarios dataSalarios={dataSalarios}/>
-        <GraficoBezier dataSalarios={dataSalarios}/>
-        <GraficoGeneros dataGeneros={dataGeneros}/>
-        <GraficoReporteEnfermedades dataReporteEnfermedades={dataReporteEnfermedades}/>
+        <GraficoSalarios dataSalarios={dataSalarios} />
+        <GraficoBezier dataSalarios={dataSalarios} />
+        <GraficoGeneros dataGeneros={dataGeneros} />
+        <GraficoReporteEnfermedades dataReporteEnfermedades={dataReporteEnfermedades} />
+        <GraficoProgreso 
+          dataProgreso={dataProgreso}
+          colors={['rgba(131, 167, 234, 0.5)', 'rgba(255, 105, 180, 0.5)']}   
+        />
       </ScrollView>
-
     </View>
-
   );
 }
 
@@ -152,4 +164,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
   },
-}); 
+});
