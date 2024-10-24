@@ -66,9 +66,11 @@ export default function GraficoSalarios({ dataSalarios }) {
         withHorizontalLabels={true}
         showValuesOnTopOfBars={true}
       />
-
-      {/* Botón para generar y compartir PDF */}
-      <Button title="Generar y Compartir PDF" onPress={generarPDF} />
+      
+      <View style={styles.button}>
+        {/* Botón para generar y compartir PDF */}
+        <Button  title="Generar y Compartir PDF" onPress={generarPDF} />
+      </View>
     </View>
   );
 }
@@ -77,5 +79,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     margin: 10
+  },
+  button: {
+    marginTop: 10
   },
 });
