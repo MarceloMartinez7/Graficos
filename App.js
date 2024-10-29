@@ -6,6 +6,7 @@ import GraficoReporteEnfermedades from './src/components/GraficoReporteEnfermeda
 import GraficoBezier from './src/components/GraficoBezier';
 import { collection, getDocs, query } from 'firebase/firestore';
 import GraficoProgreso from './src/components/GraficoProgreso';
+import { captureRef } from 'react-native-view-shot';
 
 import db from './src/database/firebaseconfig';
 
@@ -152,7 +153,6 @@ export default function Graficos() {
         <GraficoGeneros dataGeneros={dataGeneros}/>
         <GraficoReporteEnfermedades dataReporteEnfermedades={dataReporteEnfermedades}/>
       </ScrollView>
-
     </View>
 
   );
